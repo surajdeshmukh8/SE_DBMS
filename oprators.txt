@@ -1,0 +1,165 @@
+-- oprators
+-- ===========================================================
+-- 1. Create Database and Use it
+-- ===========================================================
+
+-- Create a database named 'sq'
+CREATE DATABASE sq;
+
+-- Use the created database
+USE sq;
+
+-- ===========================================================
+-- 2. Create Employee Table
+-- ===========================================================
+
+-- Create 'Employee' table with relevant columns
+CREATE TABLE Employee (
+  EmpID INT,
+  Name VARCHAR(50),
+  Salary INT,
+  Department VARCHAR(50)
+);
+
+-- ===========================================================
+-- 3. Insert Sample Data into Employee Table
+-- ===========================================================
+
+-- Insert sample employee data into the Employee table
+INSERT INTO Employee VALUES (1, 'SURAJ', 75000, 'IT');
+INSERT INTO Employee VALUES (2, 'SOHAM', 45000, 'IT');
+INSERT INTO Employee VALUES (3, 'AKSHAY', 165000, 'IT');
+INSERT INTO Employee VALUES (4, 'PRIYA', 80000, 'HR');
+INSERT INTO Employee VALUES (5, 'RAVI', 55000, 'Finance');
+INSERT INTO Employee VALUES (6, 'ANITA', 67000, 'HR');
+INSERT INTO Employee VALUES (7, 'MANISH', 98000, 'IT');
+INSERT INTO Employee VALUES (8, 'NISHA', 35000, 'Finance');
+
+-- ===========================================================
+-- 4. SQL Queries (Grouped by Categories)
+-- ===========================================================
+
+-- ===========================================================
+-- 4.1. Arithmetic Operators
+-- ===========================================================
+
+-- Increase all employees' salaries by 10%
+SELECT EmpID, Name, Salary, Salary * 1.10 AS NewSalary 
+FROM Employee;
+
+-- Find the difference between highest and lowest salary
+SELECT MAX(Salary) - MIN(Salary) AS SalaryDifference 
+FROM Employee;
+
+
+-- ===========================================================
+-- 4.2. Comparison Operators
+-- ===========================================================
+
+-- Employees with salary equal to 60,000
+SELECT * FROM Employee WHERE Salary = 60000;
+
+-- Employees with salary NOT equal to 60,000
+SELECT * FROM Employee WHERE Salary <> 60000;
+
+-- Employees with salary greater than 55,000
+SELECT * FROM Employee WHERE Salary > 55000;
+
+-- Employees with salary less than or equal to 65,000
+SELECT * FROM Employee WHERE Salary <= 65000;
+
+
+-- ===========================================================
+-- 4.3. Logical Operators
+-- ===========================================================
+
+-- Employees in the IT department earning more than 60,000
+SELECT * FROM Employee WHERE Department = 'IT' AND Salary > 60000;
+
+-- Employees in HR or Finance department
+SELECT * FROM Employee WHERE Department = 'HR' OR Department = 'Finance';
+
+-- Employees NOT in the IT department
+SELECT * FROM Employee WHERE NOT Department = 'IT';
+
+
+-- ===========================================================
+-- 4.4. Bitwise Operators
+-- ===========================================================
+
+-- Bitwise AND on salaries (for demonstration)
+SELECT Salary & 50000 
+FROM Employee;
+
+-- Bitwise OR on salaries
+SELECT Salary | 50000 
+FROM Employee;
+
+
+-- ===========================================================
+-- 4.5. Pattern Matching
+-- ===========================================================
+
+-- Employees whose name starts with 'A'
+SELECT * FROM Employee WHERE Name LIKE 'A%';
+
+-- Employees whose name ends with 'a'
+SELECT * FROM Employee WHERE Name LIKE '%a';
+
+-- Employees whose name contains 'o'
+SELECT * FROM Employee WHERE Name LIKE '%o%';
+
+
+-- ===========================================================
+-- 4.6. IN and BETWEEN Operators
+-- ===========================================================
+
+-- Employees in IT or HR department
+SELECT * FROM Employee WHERE Department IN ('IT', 'HR');
+
+-- Employees with salary between 55,000 and 70,000
+SELECT * FROM Employee WHERE Salary BETWEEN 55000 AND 70000;
+
+
+-- ===========================================================
+-- 4.7. Built-In Functions
+-- ===========================================================
+
+-- 7.1 String Functions
+SELECT
+  UPPER(Name) AS uppercase_name,          -- Convert name to uppercase
+  LOWER(Name) AS lowercase_name,          -- Convert name to lowercase
+  LENGTH(Name) AS name_length,            -- Get the length of the name
+  SUBSTRING(Name, 1, 5) AS partial_name,  -- Get first 5 characters of name
+  REPLACE(Name, 'a', 'e') AS replaced_name -- Replace 'a' with 'e' in the name
+FROM Employee;
+
+
+-- 7.2 Mathematical Functions
+SELECT
+  Salary,
+  ROUND(Salary, 2) AS rounded_salary,     -- Round salary to 2 decimal places
+  CEIL(Salary) AS ceiling_salary,         -- Get the ceiling value of salary
+  FLOOR(Salary) AS floor_salary,          -- Get the floor value of salary
+  POWER(Salary, 2) AS squared_salary,     -- Square the salary
+  MOD(Salary, 10000) AS salary_remainder, -- Get remainder when salary is divided by 10,000
+  SQRT(Salary) AS salary_sqrt             -- Get square root of salary
+FROM Employee;
+
+
+-- 7.3 Aggregate Functions
+SELECT
+  COUNT(*) AS total_employees,            -- Total number of employees
+  SUM(Salary) AS total_salary,            -- Sum of all employee salaries
+  AVG(Salary) AS average_salary,          -- Average salary of employees
+  MAX(Salary) AS highest_salary,          -- Highest salary
+  MIN(Salary) AS lowest_salary            -- Lowest salary
+FROM Employee;
+
+-- Aggregate by Department
+SELECT
+  Department,
+  COUNT(*) AS employees_in_department,    -- Count of employees in each department
+  AVG(Salary) AS avg_salary_in_department -- Average salary in each department
+FROM Employee
+GROUP BY Department;

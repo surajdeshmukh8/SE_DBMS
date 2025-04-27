@@ -1,0 +1,56 @@
+//DDL CREATE ALTER DROP RENAME MODIFY
+
+CREATE TABLE Department(
+    DeptID INT PRIMARY KEY,
+    Deptname VARCHAR(100)
+);
+
+//Create Employee table with foreign key reference
+CREATE TABLE Employee(
+    EmpID INT PRIMARY KEY,
+    Empname VARCHAR(100),
+    DeptID INT,
+    FOREIGN KEY (DeptID) REFERENCES Department(DeptID)
+);
+
+//Add a new column 'Email' to Employee table
+ALTER TABLE Employee ADD Email VARCHAR(100);
+
+//Insert records into Department
+INSERT INTO Department VALUES(1, 'IT');
+INSERT INTO Department VALUES(2, 'CS');
+INSERT INTO Department VALUES(3, 'CE');
+INSERT INTO Department VALUES(4, 'ME');
+
+//Display Department table
+SELECT * FROM Department;
+
+//Insert records into Employee
+INSERT INTO Employee VALUES(1101, 'SURAJ', 1, 'abc@gmail.com');
+INSERT INTO Employee VALUES(1102, 'SOHAM', 2, 'soham@gmail.com');
+INSERT INTO Employee VALUES(1103, 'AKSHAY', 3, 'akshay@gmail.com');
+INSERT INTO Employee VALUES(4444, 'AKASH', 4, 'akash@gmail.com');
+
+//Display Employee table
+SELECT * FROM Employee;
+
+//Modify Empname column size
+ALTER TABLE Employee MODIFY Empname VARCHAR(150);
+
+//View updated structure of Employee
+DESC Employee;
+
+//NEW: Rename the Employee table to Staff
+RENAME TABLE Employee TO Staff;
+
+//NEW: Rename 'Empname' column to 'EmployeeName' in Staff table
+ALTER TABLE Staff CHANGE Empname EmployeeName VARCHAR(150);
+
+//Display the updated Staff table
+SELECT * FROM Staff;
+
+TRUNCATE TABLE Department;
+
+//Drop tables (optional)
+DROP TABLE Staff;
+DROP TABLE Department;

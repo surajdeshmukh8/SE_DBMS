@@ -1,0 +1,31 @@
+mysql> create table t1(phone varchar(10),id int AUTO_INCREMENT primary key);
+mysql> create table del(phone varchar(10),delete_at TIMESTAMP default current_timestamp);
+mysql> delimiter //
+mysql> create trigger t2
+    -> before delete on t1 for each row
+    -> begin
+    -> insert into del(phone,delete_at) values(old.phone,now());
+    -> end; //
+mysql> insert into t1 values('1234567890',1); //
+mysql> insert into t1 values('12345670',2); //
+mysql> select * from t1;//
+mysql> delete from t1 where id=1; //
+mysql> select * from del;//
+
+
+mysql> create view v1 as
+    -> select u.phone,u.id,v.delete_at
+    -> from t1 u,del v;//
+mysql> select * from v1;//
+
+mysql> CREATE PROCEDURE add_numbers(IN a INT, IN b INT, OUT c INT)
+    -> BEGIN
+    ->     SET c = a + b;
+    -> END//
+mysql> CALL add_numbers(10, 15, @S);//
+mysql> select @s as sum;//
+
+
+mysql> update t1
+    -> set phone='surr'
+    -> where id=2;//
